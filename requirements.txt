@@ -6,3 +6,4 @@ xgboost
 scikit-learn
 fastapi[all]
 streamlit
+plotly
