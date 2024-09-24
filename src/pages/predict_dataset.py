@@ -148,30 +148,28 @@ def predict_dataset():
 
                     # Create a container for the two columns
                     with st.container():
-                        # Define two equally sized columns
-                        col1, col2 = st.columns(2)
+                        # Center the DataFrame display in the first row
+                        st.markdown("<h2 style='text-align: center;'>Feature Importance DataFrame</h2>", unsafe_allow_html=True)
+                        st.dataframe(feature_importance_df)
 
-                        # Display feature importance DataFrame in the left column
-                        with col1:
-                            st.dataframe(feature_importance_df)
+                        # Center the bar chart in the second row
+                        st.markdown("<h2 style='text-align: center;'>Feature Importance Bar Chart</h2>", unsafe_allow_html=True)
+                        fig = px.bar(
+                            feature_importance_df.sort_values(by='Importance', ascending=True), 
+                            x='Importance', 
+                            y='Feature', 
+                            orientation='h',  # Horizontal bar chart
+                            color_discrete_sequence=['royalblue']
+                        )
+                        fig.update_layout(
+                            xaxis_title='Importance',
+                            yaxis_title='Features',
+                            height=450, 
+                            width=450
+                        )
+                        # Use st.plotly_chart with a specific layout to center it
+                        st.plotly_chart(fig, use_container_width=True)
 
-                        # Create bar chart for feature importance in the right column
-                        with col2:
-                            fig = px.bar(
-                                feature_importance_df.sort_values(by='Importance', ascending=True), 
-                                x='Importance', 
-                                y='Feature', 
-                                orientation='h',  # Horizontal bar chart
-                                title='Feature Importance Bar Chart',
-                                color_discrete_sequence=['royalblue']
-                            )
-                            fig.update_layout(
-                                xaxis_title='Importance',
-                                yaxis_title='Features',
-                                height=450, 
-                                width=450
-                            )
-                            st.plotly_chart(fig)
 
 
 
